@@ -26,38 +26,44 @@
                         <div class="col-lg-6 col-md-6 col-12">
                             <h4>URL</h4>
                             <div>
-                                <label for="s_url">対象 URL</label>
-                                <input id="s_url" type="text" class="form-control" />
+                                <label for="s_url">Event URL</label>
+                                <input id="event_url" type="text" class="form-control" placeholder="https://event.17.live/17953-2309-jp-love" />
                             </div>
                             <div>
-                                <label for="g_url">Google Sheet URL</label>
-                                <input id="g_url" type="text" class="form-control" />
+                                <label for="g_url">伝達者 Nickname</label>
+                                <input id="nick_url" type="text" class="form-control" placeholder="ましろ🐈‍⬛️🖤mashiro🐾" />
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-12">
                             <div class="start-date-panel">
-                                <h4>Scraping 開始日時</h4>
+                                <h4>Scraping 開始日</h4>
                                 <div>
                                     <div>
-                                        <label for="start-date">開始日</label>
                                         <input type="text" class="form-control date" id="start-date" data-toggle="date-picker" data-single-date-picker="true">
                                     </div>
-                                    <div>
+                                    <!-- <div>
                                         <label for="start-time">開始時間</label>
                                         <input id="start-time" type="text" class="form-control flatpickr-input" />
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                             <div class="end-date-panel">
-                                <h4>Scraping 終了日時</h4>
+                                <h4>Scraping 終了日</h4>
                                 <div>
                                     <div>
-                                        <label for="end-date">終了日</label>
                                         <input type="text" class="form-control date" id="end-date" data-toggle="date-picker" data-single-date-picker="true">
                                     </div>
-                                    <div>
+                                    <!-- <div>
                                         <label for="end-time">終了時間</label>
                                         <input id="end-time" type="text" class="form-control flatpickr-input" />
+                                    </div> -->
+                                </div>
+                            </div>
+                            <div class="start-time-panel">
+                                <h4>Scraping 開始時</h4>
+                                <div>
+                                    <div>
+                                        <input id="start-time" type="text" class="form-control flatpickr-input" />
                                     </div>
                                 </div>
                             </div>
@@ -74,7 +80,7 @@
 </div>
 <script>
     var request_url = '{{ $_SERVER['SERVER_NAME'] }}:5000';
-     $( function() {
+    $(document).ready(function () {
         // Init Date picker.
         $.datepicker.regional['ja'] = {
             closeText: '閉じる',
@@ -108,26 +114,26 @@
         });
 
         // Event of Start Button.
-        $('.start-scraping').click(function () {
+        $('.start-scraping').on('click', function () {
+            console.log('click');
             var start_date_month = '';
             var start_date_day = '';
             var start_time_hour = '';
             var start_time_minute = '';
-
             var end_date_month = '';
             var end_date_day = '';
-            var end_time_hour = '';
-            var end_time_minute = '';
 
             var start_date = $('#start-date').val();
             var start_time = $('#start-time').val();
             var end_date = $('#end-date').val();
-            var end_time = $('#end-time').val();
-            var site_url = $('#s_url').val();
-            var gsheet = $('#g_url').val();
+            var event_url = $('#event_url').val();
+            var nick_url = $('#nick_url').val();
 
-            if(start_date == '' || start_time == '' || end_date == '' || end_time == '') {
+            if(start_date == '' || start_time == '' || end_date == '') {
                 toastr['warning']('開始日時と締め切り日を正確に入力してください。');
+                return ;
+            } else if (event_url == '' || nick_url == '') {
+                toastr['warning']('Scraping 宛先に関する情報を入力してください。');
                 return ;
             }
 
@@ -135,11 +141,8 @@
             start_date_day = start_date.split('/')[2];
             start_time_hour = start_time.split(':')[0];
             start_time_minute = start_time.split(':')[1];
-
             end_date_month = end_date.split('/')[1];
             end_date_day = end_date.split('/')[2];
-            end_time_hour = end_time.split(':')[0];
-            end_time_minute = end_time.split(':')[1];
             
             $.ajax({
                 url: "http://" + request_url + "/start",
@@ -153,8 +156,8 @@
                     start_time_minute: start_time_minute,
                     end_date_month: end_date_month,
                     end_date_day: end_date_day,
-                    end_time_hour: end_time_hour,
-                    end_time_minute: end_time_minute
+                    event_url: event_url,
+                    nick_url: nick_url
                 },
                 success: function(response) {
                     console.log(response);
@@ -164,6 +167,6 @@
                 }
             });
         });
-    });
+    }); 
 </script>
 @endsection
