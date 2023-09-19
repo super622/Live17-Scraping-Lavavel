@@ -143,10 +143,15 @@
             start_time_minute = start_time.split(':')[1];
             end_date_month = end_date.split('/')[1];
             end_date_day = end_date.split('/')[2];
+
+            if (end_date_month <= start_date_month && end_date_day <= start_date_day) {
+                toastr['warning']('締め切りは開始日より遅くしてはいけません。');
+                return ;
+            }
             
             $.ajax({
                 url: "http://" + request_url + "/start",
-                type: "GET",
+                type: "POST",
                 dataType: 'json',
                 crossDomain: true,
                 data: {
@@ -160,10 +165,11 @@
                     nick_url: nick_url
                 },
                 success: function(response) {
-                    console.log(response);
+                    toastr[response[0]['type']](response[0]['msg']);
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     console.log(errorThrown);
+                    toastr['error'](errorThrown);
                 }
             });
         });
