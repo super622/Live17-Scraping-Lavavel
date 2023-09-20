@@ -137,16 +137,21 @@
                 return ;
             }
 
+            start_date_year = start_date.split('/')[0];
             start_date_month = start_date.split('/')[1];
             start_date_day = start_date.split('/')[2];
             start_time_hour = start_time.split(':')[0];
             start_time_minute = start_time.split(':')[1];
+            end_date_year = end_date.split('/')[0];
             end_date_month = end_date.split('/')[1];
             end_date_day = end_date.split('/')[2];
 
-            if (end_date_month <= start_date_month && end_date_day <= start_date_day) {
-                toastr['warning']('締め切りは開始日より遅くしてはいけません。');
-                return ;
+            if (end_date_month < start_date_month || 
+                (end_date_month == start_date_month && end_date_day < start_date_day)) {
+                if(start_date_year == end_date_year) {
+                    toastr['warning']('締め切りは開始日より遅くしてはいけません。');
+                    return ;
+                }
             }
             
             $.ajax({
@@ -155,10 +160,12 @@
                 dataType: 'json',
                 crossDomain: true,
                 data: {
+                    start_date_year: start_date_year,
                     start_date_month: start_date_month,
                     start_date_day: start_date_day,
                     start_time_hour: start_time_hour,
                     start_time_minute: start_time_minute,
+                    end_date_year: end_date_year,
                     end_date_month: end_date_month,
                     end_date_day: end_date_day,
                     event_url: event_url,
@@ -169,7 +176,7 @@
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     console.log(errorThrown);
-                    toastr['error'](errorThrown);
+                    toastr['error']('奉仕機の接続が失敗しました。');
                 }
             });
         });
