@@ -33,6 +33,11 @@
                                 <label for="g_url">伝達者 Nickname</label>
                                 <input id="nick_url" type="text" class="form-control" placeholder="ましろ🐈‍⬛️🖤mashiro🐾" />
                             </div>
+                            <div class="help-panel" style="margin-top: 3rem;">
+                                <p># 使い方</p>
+                                <p>イベントURLと送信者Nicknameを2つ以上入力する場合は、「;」で区切って入力する必要があります。</p>
+                                <p>例: 「https://event.17.live/17955-2309-jp-beginner02;https://event.17.live/17955-2309-jp-beginner02」, 「ほなみ🐣🍎;なみ🍎」</p>
+                            </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-12">
                             <div class="start-date-panel">
@@ -132,7 +137,9 @@
             if(start_date == '' || start_time == '' || end_date == '') {
                 toastr['warning']('開始日時と締め切り日を正確に入力してください。');
                 return ;
-            } else if (event_url == '' || nick_url == '') {
+            }
+            
+            if (event_url == '' && nick_url == '') {
                 toastr['warning']('Scraping 宛先に関する情報を入力してください。');
                 return ;
             }
@@ -148,7 +155,7 @@
 
             if (end_date_month < start_date_month || 
                 (end_date_month == start_date_month && end_date_day < start_date_day)) {
-                if(start_date_year == end_date_year) {
+                if(start_date_year >= end_date_year) {
                     toastr['warning']('締め切りは開始日より遅くしてはいけません。');
                     return ;
                 }
