@@ -11,16 +11,15 @@
     <link rel="stylesheet" href="{{ URL::to('assets/vendor/iconly/bold.css') }}">
     <link rel="stylesheet" href="{{ URL::to('assets/vendor/perfect-scrollbar/perfect-scrollbar.css') }}">
     <link rel="stylesheet" href="{{ URL::to('assets/vendor/bootstrap-icons/bootstrap-icons.css') }}">
+    <link rel="stylesheet" href="{{ URL::to('assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker.min.css') }}">
+    <link rel="stylesheet" href="{{ URL::to('assets/vendor/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}">
+    <link rel="stylesheet" href="{{ URL::to('assets/vendor/flatpickr/flatpickr.min.css') }}">
     <link rel="stylesheet" href="{{ URL::to('assets/css/app.css') }}">
-    <link rel="stylesheet" href="{{ URL::to('assets/css/loading.css') }}">
-    <link rel="shortcut icon" href="{{ URL::to('assets/images/favicon.svg') }}" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css" />
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="{{ URL::to('assets/css/custom.css') }}">
 
     {{-- message toastr --}}
     <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css"> 
     <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
-    <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
 
 </head>
 <style>
@@ -40,12 +39,17 @@
        
     </div>
 
+    <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
     <script src="{{ URL::to('assets/vendor/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
     <script src="{{ URL::to('assets/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ URL::to('assets/vendor/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
+    <script src="{{ URL::to('assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ URL::to('assets/vendor/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}"></script>
+    <script src="{{ URL::to('assets/vendor/flatpickr/flatpickr.min.js') }}"></script>
     <script src="{{ URL::to('assets/js/bootstrap.bundle.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+    <script src="{{ URL::to('assets/js/pages/demo.timepicker.js') }}"></script>
 </body>
 
 </html>
