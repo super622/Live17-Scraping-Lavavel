@@ -77,78 +77,104 @@
                         </div>
                     </div>
                     <div class="row">
-                        <h4>Scraping 結果</h4>
-                        <table class="table table-sm table-centered mb-0 result-table">
-                            <thead>
-                                <tr>
-                                    <th>URL</th>
-                                    <th>開始日時</th>
-                                    <th>終了日時</th>
-                                    <th>状態</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- <tr>
-                                    <td>ほなみ🐣🍎</td>
-                                    <td>2023-09-25 12:20</td>
-                                    <td>2023-09-26 13:30</td>
-                                    <td><span class="badge bg-primary">作動中</span></td>
-                                </tr>
-                                <tr>
-                                    <td>https://event.17.li</td>
-                                    <td>2023-09-25 00:00:00</td>
-                                    <td>2023-09-30 01:00:00</td>
-                                    <td>URLパスが正しくないため、動作を停止します。</td>
-                                </tr>
-                                <tr>
-                                    <td>https://event.17.live/17955-2309-jp-beginner02</td>
-                                    <td>2023-09-25 00:00:00</td>
-                                    <td>2023-09-30 01:00:00</td>
-                                    <td><span class="badge bg-primary">作動中</span></td>
-                                </tr> -->
-                            </tbody>
-                        </table>    
+                        <div class="card">
+                            <div class="card-body">
+                                <h4>Scraping 結果</h4>
+                                <ul class="nav nav-tabs nav-bordered mb-3">
+                                    <li class="nav-item" role="presentation">
+                                        <a href="#default-accordions-preview" class="nav-link active" data-bs-toggle="tab" role="tab" aria-controls="nav-preview" aria-selected="true">
+                                            Event
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#default-accordions-code" class="nav-link" data-bs-toggle="tab" role="tab" aria-controls="nav-code" aria-selected="false">
+                                            配信者
+                                        </a>
+                                    </li>
+                                </ul> <!-- end nav-->
+                                <div class="tab-content">
+                                    <div class="tab-pane show active" id="default-accordions-preview">
+                                        <table class="table table-sm table-centered mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>URL</th>
+                                                    <th>開始日時</th>
+                                                    <th>終了日時</th>
+                                                    <th>状態</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="event-table">
+                                                <!-- <tr>
+                                                    <td>ほなみ🐣🍎</td>
+                                                    <td>2023-09-25 12:20</td>
+                                                    <td>2023-09-26 13:30</td>
+                                                    <td><span class="badge bg-primary">作動中</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>https://event.17.li</td>
+                                                    <td>2023-09-25 00:00:00</td>
+                                                    <td>2023-09-30 01:00:00</td>
+                                                    <td>URLパスが正しくないため、動作を停止します。</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>https://event.17.live/17955-2309-jp-beginner02</td>
+                                                    <td>2023-09-25 00:00:00</td>
+                                                    <td>2023-09-30 01:00:00</td>
+                                                    <td><span class="badge bg-primary">作動中</span></td>
+                                                </tr> -->
+                                            </tbody>
+                                        </table>
+                                    </div> <!-- end preview-->
+                                    <div class="tab-pane" id="default-accordions-code">
+                                        <table class="table table-sm table-centered mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>URL</th>
+                                                    <th>開始日時</th>
+                                                    <th>終了日時</th>
+                                                    <th>状態</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="chating-table">
+                                            </tbody>
+                                        </table>
+                                    </div> <!-- end preview code-->
+                                </div> <!-- end tab-content-->
+                            </div> <!-- end card-body-->
+                        </div> <!-- end card-->
                     </div>
                 </div>
             </div>
         </section>
     </div>
 </div>
+
 <script>
     var request_url = '{{ $_SERVER['SERVER_NAME'] }}:5000';
     $(document).ready(function () {
-        // Init Date picker.
-        // $.datepicker.regional['ja'] = {
-        //     closeText: '閉じる',
-        //     prevText: '&#x3c;前',
-        //     nextText: '次&#x3e;',
-        //     currentText: '今日',
-        //     monthNames: ['1月','2月','3月','4月','5月','6月',
-        //     '7月','8月','9月','10月','11月','12月'],
-        //     monthNamesShort: ['1月','2月','3月','4月','5月','6月',
-        //     '7月','8月','9月','10月','11月','12月'],
-        //     dayNames: ['日曜日','月曜日','火曜日','水曜日','木曜日','金曜日','土曜日'],
-        //     dayNamesShort: ['日','月','火','水','木','金','土'],
-        //     dayNamesMin: ['日','月','火','水','木','金','土'],
-        //     weekHeader: '週',
-        //     dateFormat: 'yy/mm/dd',
-        //     firstDay: 0,
-        //     isRTL: false,
-        //     showMonthAfterYear: true,
-        //     yearSuffix: '年'
-        // };
-        // $(".date").datepicker( $.datepicker.regional[ "ja" ] );
+        function get_history() {
+            $.ajax({
+                url: "/get_history",
+                type: "POST",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                beforeSend: function(xhr) {
+                    var token = $('meta[name="csrf-token"]').attr("content");
+                    if (token) {
+                        return xhr.setRequestHeader("X-CSRF-TOKEN", token);
+                    }
+                },
+                success: function(response) {
+                    console.log("response.data ->",response);
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    $('.fullScreenSpin').hide();
+                }
+            });
+        }
 
-        // Init Time picker.
-        // $('.flatpickr-input').timepicker({
-        //     timeFormat: 'H:mm:ss',
-        //     interval: 1,
-        //     defaultTime: '0',
-        //     dynamic: false,
-        //     dropdown: true,
-        //     scrollbar: true
-        // });
-
+        // get_history();
         // Event of Start Button.
         $('.start-scraping').on('click', function () {
             var start_date_month = '';

@@ -27,4 +27,8 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    public function GetHistory() {
+        return DB::table('history')->get();
+    }
 }
