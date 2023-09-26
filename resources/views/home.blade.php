@@ -26,7 +26,7 @@
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="exampleRadios" id="chating_url" value="chating">
                                     <label class="form-check-label" for="chating_url">
-                                        配信者 Nickname
+                                        配信者
                                     </label>
                                     </div>
                                 </div>
@@ -34,11 +34,11 @@
                                 <!-- <label for="s_url">Event URL || 配信者 Nickname</label> -->
                                 <input id="purpose_url" type="text" class="form-control" />
                             </div>
-                            <div class="help-panel">
+                            <!-- <div class="help-panel">
                                 <p># 使い方</p>
                                 <p>イベントURLと送信者Nicknameを2つ以上入力する場合は、「;」で区切って入力する必要があります。</p>
                                 <p>例: 「https://event.17.live/17955-2309-jp-beginner02;https://event.17.live/17955-2309-jp-beginner02」, 「ほなみ🐣🍎;なみ🍎」</p>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="col-lg-6 col-md-6 col-12">
                             <div class="start-date-panel">
