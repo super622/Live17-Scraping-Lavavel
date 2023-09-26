@@ -76,8 +76,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">               
-                        <h4>Scraping 開始日</h4>                                  
+                    <div class="row">
+                        <h4>Scraping 結果</h4>
                         <table class="table table-sm table-centered mb-0 result-table">
                             <thead>
                                 <tr>
