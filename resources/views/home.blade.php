@@ -156,6 +156,8 @@
                             status = ''
                             if(response[i]['status'] == '' || response[i]['status'] == '0') {
                                 status = '<span class="badge bg-primary">作動中</span>';
+                            } else if(response[i]['status'] == '-') {
+                                status = '<span class="badge bg-success">予約済み</span>';
                             } else {
                                 status = response[i]['status'];
                             }
@@ -164,6 +166,8 @@
                             status = ''
                             if(response[i]['status'] == '' || response[i]['status'] == '0') {
                                 status = '<span class="badge bg-primary">作動中</span>';
+                            } else if(response[i]['status'] == '-') {
+                                status = '<span class="badge bg-success">予約済み</span>';
                             } else {
                                 status = response[i]['status'];
                             }
@@ -257,6 +261,9 @@
                 success: function(response) {
                     toastr[response[0]['type']](response[0]['msg']);
                     get_history();
+                    setTimeout(() => {
+                        get_history();
+                    }, 5000);
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     console.log(errorThrown);
