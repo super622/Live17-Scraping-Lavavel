@@ -104,24 +104,6 @@
                                                 </tr>
                                             </thead>
                                             <tbody class="event-table">
-                                                <!-- <tr>
-                                                    <td>ほなみ🐣🍎</td>
-                                                    <td>2023-09-25 12:20</td>
-                                                    <td>2023-09-26 13:30</td>
-                                                    <td><span class="badge bg-primary">作動中</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>https://event.17.li</td>
-                                                    <td>2023-09-25 00:00:00</td>
-                                                    <td>2023-09-30 01:00:00</td>
-                                                    <td>URLパスが正しくないため、動作を停止します。</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>https://event.17.live/17955-2309-jp-beginner02</td>
-                                                    <td>2023-09-25 00:00:00</td>
-                                                    <td>2023-09-30 01:00:00</td>
-                                                    <td><span class="badge bg-primary">作動中</span></td>
-                                                </tr> -->
                                             </tbody>
                                         </table>
                                     </div> <!-- end preview-->
@@ -155,7 +137,7 @@
         function get_history() {
             $.ajax({
                 url: "/get_history",
-                type: "POST",
+                type: "get",
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
@@ -166,7 +148,33 @@
                     }
                 },
                 success: function(response) {
-                    console.log("response.data ->",response);
+                    event_html = '';
+                    chating_html = '';
+
+                    for(i = 0; i < response.length; i ++) {
+                        if(response[i]['type'] == 'E'){
+                            status = ''
+                            if(response[i]['status'] == '' || response[i]['status'] == '0') {
+                                status = '<span class="badge bg-primary">作動中</span>';
+                            } else {
+                                status = response[i]['status'];
+                            }
+                            event_html += '<tr><td>' + response[i]['url'] + '</td><td>' + response[i]['start_date'] + '</td><td>' + response[i]['end_date'] + '</td><td>' + status + '</td></tr>';
+                        } else {
+                            status = ''
+                            if(response[i]['status'] == '' || response[i]['status'] == '0') {
+                                status = '<span class="badge bg-primary">作動中</span>';
+                            } else {
+                                status = response[i]['status'];
+                            }
+                            chating_html += '<tr><td>' + response[i]['url'] + '</td><td>' + response[i]['start_date'] + '</td><td>' + response[i]['end_date'] + '</td><td>' + status + '</td></tr>'
+                        }
+                    }
+
+                    event_html += '</tr>';
+                    chating_html += '</tr>';
+                    $('.event-table').html(event_html);
+                    $('.chating-table').html(chating_html);
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     $('.fullScreenSpin').hide();
@@ -174,7 +182,12 @@
             });
         }
 
-        // get_history();
+        get_history();
+
+        $('.nav-link').on('click', function () {
+            get_history();
+        });
+
         // Event of Start Button.
         $('.start-scraping').on('click', function () {
             var start_date_month = '';
@@ -243,6 +256,7 @@
                 },
                 success: function(response) {
                     toastr[response[0]['type']](response[0]['msg']);
+                    get_history();
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     console.log(errorThrown);

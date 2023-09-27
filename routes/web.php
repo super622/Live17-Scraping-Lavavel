@@ -19,4 +19,4 @@ use Illuminate\Http\Request;
 // ----------------------------- home dashboard ------------------------------//
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('/');
 
-Route::post('/get_history', [App\Http\Controllers\HomeController::class, 'GetHistory'])->name('get_history');
+Route::get('/get_history', [App\Http\Controllers\HomeController::class, 'GetHistory'])->name('get_history');
