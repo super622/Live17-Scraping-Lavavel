@@ -218,6 +218,7 @@
                 toastr['warning']('Scraping 宛先に関する情報を入力してください。');
                 return ;
             }
+            $('#purpose_url').val('');
 
             start_date_year = start_date.split('/')[0];
             start_date_month = start_date.split('/')[1];
